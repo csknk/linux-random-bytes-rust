@@ -35,6 +35,6 @@ pub fn run(config: Config) -> io::Result<()> {
     let mut buffer = vec![0u8; config.n_bytes as usize];
     f.read(&mut buffer)?;
     println!("buffer = {:?}", buffer);
-    println!("{}", bytes_to_hexstring(&buffer));
+    println!("{}", bytes_to_hexstring(&buffer, Some("X")));
     Ok(())
 }

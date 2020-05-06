@@ -5,6 +5,7 @@
 // You may obtain a copy of the License at
 // 
 // http://www.apache.org/licenses/LICENSE-2.0
+#![allow(dead_code)]
 
 /**
  * Return an integer from a hex character.
@@ -41,10 +42,21 @@ pub fn hexstring_to_bytes(str: String) -> Result<Vec<u8>, &'static str> {
 /**
  * Return a hexstring representation of a slice of bytes
  * */
-pub fn bytes_to_hexstring(bytes: &[u8]) -> String {
+pub fn bytes_to_hexstring(bytes: &[u8], form: Option<&str>) -> String {
+    let mut caps = false;
+    if let Some(f) = form {
+        if f == "X" {
+            caps = true;
+        } 
+    }
+
     let mut result: String = "".to_string();
     for el in bytes {
-        let s = format!("{:02x}", el);
+//        let s = format!("{:02x}", el);
+        let s = match caps {
+            false => format!("{:02x}", el),
+            true => format!("{:02X}", el),
+        };
         result.push_str(&s);
     }
     return result;
