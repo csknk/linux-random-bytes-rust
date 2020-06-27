@@ -5,7 +5,7 @@ use std::io::prelude::*;
 use std::fs::File;
 use std::io;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Format {
     Hex,
     Int,
@@ -42,12 +42,14 @@ impl Config {
 }
 
 pub fn run(config: Config) -> io::Result<()> {
-    println!("{:?}", config);
     let source = "/dev/urandom";
     let mut f = File::open(source)?;
     let mut buffer = vec![0u8; config.n_bytes as usize];
     f.read(&mut buffer)?;
-    println!("buffer = {:?}", buffer);
-    println!("{}", bytes_to_hexstring(&buffer, Some("X")));
+    if config.format == Format::Hex {
+        println!("{}", bytes_to_hexstring(&buffer, Some("X")));
+    } else {
+        println!("{:?}", buffer);
+    }
     Ok(())
 }

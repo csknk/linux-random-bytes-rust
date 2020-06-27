@@ -52,7 +52,6 @@ pub fn bytes_to_hexstring(bytes: &[u8], form: Option<&str>) -> String {
 
     let mut result: String = "".to_string();
     for el in bytes {
-//        let s = format!("{:02x}", el);
         let s = match caps {
             false => format!("{:02x}", el),
             true => format!("{:02X}", el),
